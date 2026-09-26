@@ -6,10 +6,10 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
   selector: 'app-register',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  templateUrl: './register.html',
+  styleUrls: ['./register.css']
 })
-export class RegisterComponent {
+export class Register {
   userType: 'customer' | 'seller' = 'customer';
   
   customerForm: FormGroup;
