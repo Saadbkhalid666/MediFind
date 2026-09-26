@@ -1,1 +1,105 @@
-<p>login works!</p>
+<div class="min-h-screen flex items-center justify-center px-5 py-10 bg-gradient-to-b from-[#DCF3FB] via-[#F7F9FA] to-[#F7F9FA] font-['Inter',sans-serif]">
+  <div class="max-w-[420px] w-full">
+
+    <!-- Logo Header -->
+    <div class="flex items-center gap-2 mb-6 font-['Poppins',sans-serif] font-bold text-xl text-[#16213E]">
+      <span class="w-[9px] h-[9px] rounded-full bg-[#29ABE2]"></span>
+      MediFind
+    </div>
+
+    <!-- Role Switcher Navigation -->
+    <div class="flex gap-2 mb-6">
+      <button 
+        type="button"
+        (click)="setRole('customer')"
+        [ngClass]="userType === 'customer' ? 'bg-[#16213E] text-white' : 'bg-[#F7F9FA] text-[#4A6C7A] hover:bg-gray-200'"
+        class="px-[18px] py-2 rounded-full text-xs font-semibold transition-colors duration-200 cursor-pointer">
+        Customer
+      </button>
+      <button 
+        type="button"
+        (click)="setRole('seller')"
+        [ngClass]="userType === 'seller' ? 'bg-[#16213E] text-white' : 'bg-[#F7F9FA] text-[#4A6C7A] hover:bg-gray-200'"
+        class="px-[18px] py-2 rounded-full text-xs font-semibold transition-colors duration-200 cursor-pointer">
+        Seller
+      </button>
+    </div>
+
+    <!-- Title Tagline -->
+    <span class="text-xs text-[#29ABE2] font-bold tracking-wider uppercase">WELCOME BACK</span>
+    <h1 class="font-['Poppins',sans-serif] text-2xl font-bold text-[#16213E] mt-1 mb-6">
+      Log in to your {{ userType === 'customer' ? 'customer' : 'seller' }} account
+    </h1>
+
+    <!-- Login Card -->
+    <div class="bg-white rounded-[18px] shadow-[0_8px_24px_rgba(22,33,62,0.08)] p-7">
+      
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Email or Phone -->
+        <div class="mb-3.5">
+          <label class="block text-xs text-[#6B7280] font-semibold mb-1.5">Email or phone</label>
+          <input 
+            type="text" 
+            formControlName="emailOrPhone" 
+            placeholder="you@email.com or +92 300 0000000"
+            class="w-full bg-[#F7F9FA] border border-[#e6eaee] rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2] transition duration-150">
+          <span *ngIf="loginForm.get('emailOrPhone')?.touched && loginForm.get('emailOrPhone')?.invalid" class="text-red-500 text-xs mt-1 block">Please enter your email or phone number.</span>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3.5">
+          <label class="block text-xs text-[#6B7280] font-semibold mb-1.5">Password</label>
+          <input 
+            type="password" 
+            formControlName="password" 
+            placeholder="••••••••"
+            class="w-full bg-[#F7F9FA] border border-[#e6eaee] rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2] transition duration-150">
+          <span *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-500 text-xs mt-1 block">Password must be at least 6 characters.</span>
+        </div>
+
+        <!-- Remember Me & Forgot Password Row -->
+        <div class="flex items-center justify-between text-xs text-[#6B7280] my-4">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input 
+              type="checkbox" 
+              formControlName="rememberMe"
+              class="w-4 h-4 text-[#29ABE2] border-gray-300 rounded focus:ring-[#29ABE2]">
+            <span>Remember me</span>
+          </label>
+          <a routerLink="/forgot-password" class="text-[#29ABE2] font-semibold hover:underline">Forgot password?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          [disabled]="isLoading"
+          class="w-full bg-[#29ABE2] text-white rounded-full py-3 font-semibold text-sm hover:bg-[#1E8FC4] disabled:opacity-50 transition duration-200 shadow-md">
+          <span *ngIf="!isLoading">Log in</span>
+          <span *ngIf="isLoading">Logging in...</span>
+        </button>
+
+      </form>
+
+      <!-- Create Account Link -->
+      <p class="text-center text-xs text-[#6B7280] mt-4">
+        New here? 
+        <a routerLink="/register" class="text-[#29ABE2] font-semibold hover:underline">Create an account</a>
+      </p>
+
+    </div>
+
+    <!-- Footer Notice -->
+    <p class="text-center text-xs text-[#6B7280] mt-5">
+      <span *ngIf="userType === 'customer'">
+        Are you a pharmacy? 
+        <strong class="text-[#16213E] cursor-pointer hover:underline" (click)="setRole('seller')">Log in as a Seller</strong>
+      </span>
+      <span *ngIf="userType === 'seller'">
+        Looking to buy medicine? 
+        <strong class="text-[#16213E] cursor-pointer hover:underline" (click)="setRole('customer')">Log in as a Customer</strong>
+      </span>
+    </p>
+
+  </div>
+</div>
