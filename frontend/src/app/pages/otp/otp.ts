@@ -9,7 +9,7 @@ import { ReactiveFormsModule, FormArray, FormBuilder, FormGroup, Validators } fr
   templateUrl: './otp.html',
   styleUrls: ['./otp.css']
 })
-export class VerifyOtpComponent implements OnInit, OnDestroy {
+export class OtpComponent implements OnInit, OnDestroy {
   @ViewChildren('otpInput') inputs!: QueryList<ElementRef>;
 
   otpForm: FormGroup;
