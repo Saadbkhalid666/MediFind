@@ -10,6 +10,6 @@ export const routes: Routes = [{
     path: 'login',
     component: LoginComponent
 },{
-    path:'otp',
+    path:'verify-otp',
     component:OtpComponent
 }];
