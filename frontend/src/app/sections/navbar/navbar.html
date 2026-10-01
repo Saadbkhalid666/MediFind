@@ -1,1 +1,68 @@
-<p>navbar works!</p>
+<nav
+  class="sticky top-0 z-20 bg-white py-4 shadow-[0_1px_0_rgba(0,0,0,0.05)]"
+>
+  <div
+    class="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-5 px-6"
+  >
+    <!-- Logo -->
+    <a
+      routerLink="/"
+      class="flex items-center gap-2 font-['Poppins'] text-[22px] font-bold text-[#16213e]"
+    >
+      <span class="inline-block h-2.5 w-2.5 rounded-full bg-[#29abe2] cursor-pointer"></span>
+      MediFind
+    </a>
+
+    <!-- Navigation Links -->
+    <div
+      class="hidden items-center gap-7 font-['Inter'] text-[15px] font-medium text-[#16213e] md:flex"
+    >
+      <a
+        routerLink="/search"
+        class="transition-colors duration-200 hover:text-[#29abe2] cursor-pointer"
+      >
+        Search
+      </a>
+
+      <a
+        routerLink="/how-it-works"
+        class="transition-colors duration-200 hover:text-[#29abe2] cursor-pointer"
+      >
+        How it works
+      </a>
+
+      <a
+        routerLink="/seller"
+        class="transition-colors duration-200 hover:text-[#29abe2] cursor-pointer"
+      >
+        For Sellers
+      </a>
+
+      <a
+        routerLink="/about"
+        class="transition-colors duration-200 hover:text-[#29abe2] cursor-pointer"
+      >
+        About
+      </a>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="flex gap-2.5">
+      <!-- Login -->
+      <a
+        routerLink="/login"
+        class="inline-block rounded-full border-[1.5px] border-[#16213e] bg-transparent px-5 py-2.5 text-sm font-semibold text-[#16213e] transition-all duration-200 hover:bg-[#16213e] hover:text-white cursor-pointer"
+      >
+        Log in
+      </a>
+
+      <!-- Become Seller -->
+      <a
+        routerLink="/register"
+        class="inline-block rounded-full bg-[#29abe2] px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#1e8fc4] cursor-pointer"
+      >
+        Become a Seller
+      </a>
+    </div>
+  </div>
+</nav>
