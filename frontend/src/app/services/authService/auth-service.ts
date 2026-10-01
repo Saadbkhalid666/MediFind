@@ -40,39 +40,23 @@ export class AuthService {
       this.usernameSubject.next(savedUsername);
     }
   }
+  registerCustomer(customer: Customer): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/registerCustomer`, customer);
+  }
 
   registerSeller(seller: Seller): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/registerSeller`, seller).pipe(
-      tap((res) => {
-        if (res?.token && res?.username) {
-          localStorage.setItem('token', res.token);
-          localStorage.setItem('username', res.username);
-          this.usernameSubject.next(res.username);
-        }
-      }),
-    );
+    return this.http.post<any>(`${this.apiUrl}/registerSeller`, seller);
   }
 
-  registerCustomer(cust: Customer): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/registerCustomer`, cust).pipe(
+  verifyOtp(data: { otp: string; email: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/verify-otp`, data).pipe(
       tap((res) => {
-        if (res?.token && res?.username) {
-          localStorage.setItem('token', res.token);
-          localStorage.setItem('username', res.name);
-          this.usernameSubject.next(res.username);
-        }
-      }),
-    );
-  }
-
-  verifyOtp(otp: { otp: string }): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/verify-otp`, otp).pipe(
-      tap((res) => {
-        if (res?.username && res?.token) {
+        if (res?.token) {
           localStorage.setItem('token', res.token);
           localStorage.setItem('username', res.name);
           localStorage.setItem('role', res.role);
-          this.usernameSubject.next(res.username);
+
+          this.usernameSubject.next(res.name);
           this.userRoleSbuject.next(res.role);
         }
       }),
@@ -82,11 +66,12 @@ export class AuthService {
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap((res) => {
-        if (res?.username && res?.token) {
+        if (res?.token) {
           localStorage.setItem('token', res.token);
           localStorage.setItem('username', res.name);
           localStorage.setItem('role', res.role);
-          this.usernameSubject.next(res.username);
+
+          this.usernameSubject.next(res.name);
           this.userRoleSbuject.next(res.role);
         }
       }),
