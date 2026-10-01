@@ -25,7 +25,7 @@ export interface Seller {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'url';
+  private apiUrl = 'http://192.168.100.14/api/v1/auth';
 
   private usernameSubject = new BehaviorSubject<string | null>(null);
   username$ = this.usernameSubject.asObservable();
