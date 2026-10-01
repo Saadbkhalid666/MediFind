@@ -1,0 +1,687 @@
+
+<div
+  class="min-h-screen flex items-center justify-center px-5 py-10 bg-linear-to-b from-[#DCF3FB] via-[#F7F9FA] to-[#F7F9FA] font-['Inter',sans-serif]"
+>
+
+  <!-- Toast Container -->
+  <div class="fixed top-5 right-5 flex flex-col gap-3 z-50">
+    <div
+      *ngFor="let toast of toasts"
+      [ngClass]="{
+        'bg-green-500': toast.type === 'success',
+        'bg-red-500': toast.type === 'error'
+      }"
+      class="text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-500 animate-slide-in-out"
+    >
+      {{ toast.message }}
+    </div>
+  </div>
+
+  <div class="max-w-[460px] w-full">
+
+    <!-- Logo Header -->
+    <div
+      class="flex items-center gap-2 mb-6 font-['Poppins',sans-serif] font-bold text-xl text-[#16213E]"
+    >
+      <span class="w-[9px] h-[9px] rounded-full bg-[#29ABE2]"></span>
+      MediFind
+    </div>
+
+    <!-- Role Switcher -->
+    <div class="flex gap-2 mb-6">
+
+      <button
+        type="button"
+        (click)="setRole('customer')"
+        [ngClass]="
+          userType === 'customer'
+            ? 'bg-[#16213E] text-white'
+            : 'bg-[#F7F9FA] text-[#4A6C7A] hover:bg-gray-200'
+        "
+        class="px-[18px] py-2 rounded-full text-xs font-semibold transition-colors duration-200"
+      >
+        Customer
+      </button>
+
+      <button
+        type="button"
+        (click)="setRole('seller')"
+        [ngClass]="
+          userType === 'seller'
+            ? 'bg-[#16213E] text-white'
+            : 'bg-[#F7F9FA] text-[#4A6C7A] hover:bg-gray-200'
+        "
+        class="px-[18px] py-2 rounded-full text-xs font-semibold transition-colors duration-200"
+      >
+        Seller / Pharmacy
+      </button>
+
+    </div>
+
+    <!-- Title -->
+    <span class="text-xs text-[#29ABE2] font-bold tracking-wider">
+      GET STARTED
+    </span>
+
+    <h1
+      class="font-['Poppins',sans-serif] text-2xl font-bold text-[#16213E] mt-1 mb-6"
+    >
+      Create your {{ userType === 'customer' ? 'customer' : 'seller' }} account
+    </h1>
+
+    <!-- Registration Card -->
+    <div
+      class="bg-white rounded-[18px] shadow-[0_8px_24px_rgba(22,33,62,0.08)] p-7"
+    >
+
+      <!-- ===================================================== -->
+      <!-- CUSTOMER FORM -->
+      <!-- ===================================================== -->
+
+      <form
+        *ngIf="userType === 'customer'"
+        [formGroup]="customerForm"
+        (ngSubmit)="onSubmit()"
+      >
+
+        <!-- Full Name -->
+        <div class="mb-3.5">
+
+          <label
+            class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+          >
+            Full name
+          </label>
+
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Ayesha Raza"
+            class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+          />
+
+          <span
+            *ngIf="
+              customerForm.get('name')?.touched &&
+              customerForm.get('name')?.invalid
+            "
+            class="text-red-500 text-xs mt-1 block"
+          >
+            Name is required.
+          </span>
+
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-3.5">
+
+          <label
+            class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+          >
+            Phone number
+          </label>
+
+          <input
+            type="tel"
+            formControlName="phone"
+            placeholder="+92 300 1234567"
+            class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+          />
+
+          <span
+            *ngIf="
+              customerForm.get('phone')?.touched &&
+              customerForm.get('phone')?.invalid
+            "
+            class="text-red-500 text-xs mt-1 block"
+          >
+            Valid phone number is required.
+          </span>
+
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3.5">
+
+          <label
+            class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+          >
+            Email address
+          </label>
+
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="ayesha@email.com"
+            class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+          />
+
+          <span
+            *ngIf="
+              customerForm.get('email')?.touched &&
+              customerForm.get('email')?.invalid
+            "
+            class="text-red-500 text-xs mt-1 block"
+          >
+            Valid email is required.
+          </span>
+
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3.5">
+
+          <label
+            class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+          >
+            Password
+          </label>
+
+          <div class="relative">
+
+            <input
+              [type]="passwordvisible ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Create a password"
+              class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 pr-11 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+            />
+
+            <!-- Password Toggle -->
+            <button
+              type="button"
+              (click)="togglePassword()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#29ABE2] focus:outline-none"
+              [attr.aria-label]="
+                passwordvisible ? 'Hide password' : 'Show password'
+              "
+            >
+
+              <!-- Eye -->
+              <svg
+                *ngIf="!passwordvisible"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z"
+                />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+
+              <!-- Eye Off -->
+              <svg
+                *ngIf="passwordvisible"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3l18 18"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9.88 9.88a3 3 0 014.24 4.24"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.23 6.23A10.477 10.477 0 001.5 12s3.75 7.5 10.5 7.5a10.48 10.48 0 005.77-1.73"
+                />
+              </svg>
+
+            </button>
+
+          </div>
+
+          <span
+            *ngIf="
+              customerForm.get('password')?.touched &&
+              customerForm.get('password')?.invalid
+            "
+            class="text-red-500 text-xs mt-1 block"
+          >
+            Password must be at least 6 characters.
+          </span>
+
+        </div>
+
+        <!-- Terms -->
+        <div class="mb-5 flex items-center gap-2">
+
+          <input
+            type="checkbox"
+            id="terms"
+            formControlName="acceptTerms"
+            class="w-4 h-4 text-[#29ABE2] border-gray-300 rounded focus:ring-[#29ABE2]"
+          />
+
+          <label
+            for="terms"
+            class="text-xs text-[#6B7280]"
+          >
+            I accept the
+            <button
+              type="button"
+              class="text-[#29ABE2] underline font-medium"
+            >
+              Terms & Conditions
+            </button>
+          </label>
+
+        </div>
+
+        <span
+          *ngIf="
+            customerForm.get('acceptTerms')?.touched &&
+            customerForm.get('acceptTerms')?.invalid
+          "
+          class="text-red-500 text-xs -mt-3 mb-3 block"
+        >
+          You must accept the terms.
+        </span>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          [disabled]="loading"
+          class="w-full bg-[#29ABE2] text-white rounded-full py-3 font-semibold text-sm hover:bg-[#1E8FC4] transition duration-200 shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {{ loading ? 'Creating account...' : 'Create Customer Account' }}
+        </button>
+
+      </form>
+
+
+      <form
+        *ngIf="userType === 'seller'"
+        [formGroup]="sellerForm"
+        (ngSubmit)="onSubmit()"
+      >
+
+        <!-- Pharmacy Name -->
+        <div class="mb-3.5">
+
+          <label
+            class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+          >
+            Pharmacy name
+          </label>
+
+          <input
+            type="text"
+            formControlName="pharmacyName"
+            placeholder="City Meds Pharmacy"
+            class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+          />
+
+          <span
+            *ngIf="
+              sellerForm.get('pharmacyName')?.touched &&
+              sellerForm.get('pharmacyName')?.invalid
+            "
+            class="text-red-500 text-xs mt-1 block"
+          >
+            Pharmacy name is required.
+          </span>
+
+        </div>
+
+        <!-- Owner Name -->
+        <div class="mb-3.5">
+
+          <label
+            class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+          >
+            Owner name
+          </label>
+
+          <input
+            type="text"
+            formControlName="ownerName"
+            placeholder="Dr. Ahmed Khan"
+            class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+          />
+
+          <span
+            *ngIf="
+              sellerForm.get('ownerName')?.touched &&
+              sellerForm.get('ownerName')?.invalid
+            "
+            class="text-red-500 text-xs mt-1 block"
+          >
+            Owner name is required.
+          </span>
+
+        </div>
+
+        <!-- Phone & WhatsApp -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3.5">
+
+          <div>
+
+            <label
+              class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+            >
+              Phone number
+            </label>
+
+            <input
+              type="tel"
+              formControlName="phone"
+              placeholder="+92 300 0000000"
+              class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+            />
+
+            <span
+              *ngIf="
+                sellerForm.get('phone')?.touched &&
+                sellerForm.get('phone')?.invalid
+              "
+              class="text-red-500 text-xs mt-1 block"
+            >
+              Valid phone number is required.
+            </span>
+
+          </div>
+
+          <div>
+
+            <label
+              class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+            >
+              WhatsApp number
+            </label>
+
+            <input
+              type="tel"
+              formControlName="whatsappNo"
+              placeholder="+92 300 0000000"
+              class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+            />
+
+            <span
+              *ngIf="
+                sellerForm.get('whatsappNo')?.touched &&
+                sellerForm.get('whatsappNo')?.invalid
+              "
+              class="text-red-500 text-xs mt-1 block"
+            >
+              Valid WhatsApp number is required.
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- Address & City -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3.5">
+
+          <div>
+
+            <label
+              class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+            >
+              Address
+            </label>
+
+            <input
+              type="text"
+              formControlName="address"
+              placeholder="Shop #12, Main Blvd"
+              class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+            />
+
+            <span
+              *ngIf="
+                sellerForm.get('address')?.touched &&
+                sellerForm.get('address')?.invalid
+              "
+              class="text-red-500 text-xs mt-1 block"
+            >
+              Address is required.
+            </span>
+
+          </div>
+
+          <div>
+
+            <label
+              class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+            >
+              City
+            </label>
+
+            <input
+              type="text"
+              formControlName="city"
+              placeholder="Lahore"
+              class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+            />
+
+            <span
+              *ngIf="
+                sellerForm.get('city')?.touched &&
+                sellerForm.get('city')?.invalid
+              "
+              class="text-red-500 text-xs mt-1 block"
+            >
+              City is required.
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- Opening Hours -->
+        <div class="mb-3.5">
+
+          <label
+            class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+          >
+            Opening hours
+          </label>
+
+          <input
+            type="text"
+            formControlName="openingHours"
+            placeholder="e.g. 09:00 AM - 10:00 PM"
+            class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+          />
+
+          <span
+            *ngIf="
+              sellerForm.get('openingHours')?.touched &&
+              sellerForm.get('openingHours')?.invalid
+            "
+            class="text-red-500 text-xs mt-1 block"
+          >
+            Opening hours are required.
+          </span>
+
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3.5">
+
+          <label
+            class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+          >
+            Email address
+          </label>
+
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="store@pharmacy.com"
+            class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+          />
+
+          <span
+            *ngIf="
+              sellerForm.get('email')?.touched &&
+              sellerForm.get('email')?.invalid
+            "
+            class="text-red-500 text-xs mt-1 block"
+          >
+            Valid email is required.
+          </span>
+
+        </div>
+
+        <!-- Password -->
+        <div class="mb-5">
+
+          <label
+            class="block text-xs text-[#6B7280] font-semibold mb-1.5"
+          >
+            Password
+          </label>
+
+          <div class="relative">
+
+            <input
+              [type]="passwordvisible ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Create password"
+              class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 pr-11 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+            />
+
+            <button
+              type="button"
+              (click)="togglePassword()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#29ABE2] focus:outline-none"
+              [attr.aria-label]="
+                passwordvisible ? 'Hide password' : 'Show password'
+              "
+            >
+
+              <svg
+                *ngIf="!passwordvisible"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z"
+                />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+
+              <svg
+                *ngIf="passwordvisible"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3l18 18"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9.88 9.88a3 3 0 014.24 4.24"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.23 6.23A10.477 10.477 0 001.5 12s3.75 7.5 10.5 7.5a10.48 10.48 0 005.77-1.73"
+                />
+              </svg>
+
+            </button>
+
+          </div>
+
+          <span
+            *ngIf="
+              sellerForm.get('password')?.touched &&
+              sellerForm.get('password')?.invalid
+            "
+            class="text-red-500 text-xs mt-1 block"
+          >
+            Password must be at least 6 characters.
+          </span>
+
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          [disabled]="loading"
+          class="w-full bg-[#29ABE2] text-white rounded-full py-3 font-semibold text-sm hover:bg-[#1E8FC4] transition duration-200 shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {{ loading ? 'Registering pharmacy...' : 'Register Pharmacy' }}
+        </button>
+
+      </form>
+
+
+      <!-- Already Have Account -->
+      <p class="text-center text-xs text-[#6B7280] mt-4">
+
+        Already have an account?
+
+        <a
+          routerLink="/login"
+          class="text-[#29ABE2] font-semibold hover:underline"
+        >
+          Log in
+        </a>
+
+      </p>
+
+    </div>
+
+    <!-- Footer Notice -->
+    <p class="text-center text-xs text-[#6B7280] mt-5">
+
+      <span *ngIf="userType === 'customer'">
+        Selling medicine?
+        Switch to
+        <strong
+          class="text-[#16213E] cursor-pointer"
+          (click)="setRole('seller')"
+        >
+          Seller
+        </strong>
+        above to register your pharmacy.
+      </span>
+
+      <span *ngIf="userType === 'seller'">
+        Buying medicine?
+        Switch to
+        <strong
+          class="text-[#16213E] cursor-pointer"
+          (click)="setRole('customer')"
+        >
+          Customer
+        </strong>
+        above to order directly.
+      </span>
+
+    </p>
+
+  </div>
+</div>
