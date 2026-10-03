@@ -50,12 +50,75 @@
         <!-- Password -->
         <div class="mb-3.5">
           <label class="block text-xs text-[#6B7280] font-semibold mb-1.5">Password</label>
-          <input 
-            type="password" 
-            formControlName="password" 
-            placeholder="••••••••"
-            class="w-full bg-[#F7F9FA] border border-[#e6eaee] rounded-[10px] px-3.5 py-3 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2] transition duration-150">
-          <span *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-500 text-xs mt-1 block">Password must be at least 6 characters.</span>
+          <div class="relative">
+
+            <input
+              [type]="passwordvisible ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Enter Password"
+              class="w-full bg-[#F7F9FA] border rounded-[10px] px-3.5 py-3 pr-11 text-sm text-[#16213E] focus:outline-none focus:border-[#29ABE2]"
+            />
+
+            <!-- Password Toggle -->
+            <button
+              type="button"
+              (click)="togglePassword()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#29ABE2] focus:outline-none"
+              [attr.aria-label]="
+                passwordvisible ? 'Hide password' : 'Show password'
+              "
+            >
+
+              <!-- Eye -->
+              <svg
+                *ngIf="!passwordvisible"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 12s3.75-7.5 9.75-7.5S21.75 12 21.75 12s-3.75 7.5-9.75 7.5S2.25 12 2.25 12z"
+                />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+
+              <!-- Eye Off -->
+              <svg
+                *ngIf="passwordvisible"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3l18 18"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9.88 9.88a3 3 0 014.24 4.24"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.23 6.23A10.477 10.477 0 001.5 12s3.75 7.5 10.5 7.5a10.48 10.48 0 005.77-1.73"
+                />
+              </svg>
+
+            </button>
+
+          </div>
+
+            <span *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-500 text-xs mt-1 block">Password must be at least 6 characters.</span>
         </div>
 
         <!-- Remember Me & Forgot Password Row -->
