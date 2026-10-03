@@ -1,13 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Register } from './pages/register/register';
-import { HomePage } from './pages/home-page/home-page';
+import { Navbar } from './sections/navbar/navbar';
+import { Topbar } from './sections/topbar/topbar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HomePage],
+  imports: [RouterOutlet, Navbar, Topbar],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('medifind');
