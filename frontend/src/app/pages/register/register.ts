@@ -140,8 +140,9 @@ export class Register {
           'Registration successful. OTP sent to your email.',
           'success'
         );
+        sessionStorage.setItem("email", this.customerForm.value.email)
 
-        this.router.navigate(['/otp'], {
+        this.router.navigate(['/verify-otp'], {
           queryParams: {
             email: customer.email
           }
@@ -187,8 +188,10 @@ export class Register {
           'Registration successful. OTP sent to your email.',
           'success'
         );
+        sessionStorage.setItem("email", this.sellerForm.value.email)
 
-        this.router.navigate(['/otp'], {
+
+        this.router.navigate(['/verify-otp'], {
           queryParams: {
             email: seller.email
           }
