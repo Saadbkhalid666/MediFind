@@ -1,1 +1,49 @@
-<p>trustbar works!</p>
+<div class="w-full border-y border-gray-200 bg-[#F8FAFC] py-4">
+  <div
+    class="mx-auto grid max-w-[1200px] grid-cols-1 px-6 sm:grid-cols-2 lg:grid-cols-4"
+  >
+    <!-- Verified Pharmacies -->
+    <div
+      class="flex min-h-9 items-center justify-center gap-2.5 border-b border-gray-200 py-3 text-sm font-medium text-[#16213E] sm:border-r lg:border-b-0 lg:py-0"
+    >
+      <span class="flex items-center justify-center text-[#29ABE2]">
+        <lucide-icon [img]="Check" [size]="20"></lucide-icon>
+      </span>
+
+      <span>Verified Pharmacies</span>
+    </div>
+
+    <!-- Real-Time Stock -->
+    <div
+      class="flex min-h-9 items-center justify-center gap-2.5 border-b border-gray-200 py-3 text-sm font-medium text-[#16213E] lg:border-b-0 lg:border-r lg:py-0"
+    >
+      <span class="flex items-center justify-center text-[#29ABE2]">
+        <lucide-icon [img]="Timer" [size]="20"></lucide-icon>
+      </span>
+
+      <span>Real-Time Stock</span>
+    </div>
+
+    <!-- Nearest Location -->
+    <div
+      class="flex min-h-9 items-center justify-center gap-2.5 border-b border-gray-200 py-3 text-sm font-medium text-[#16213E] sm:border-r lg:border-b-0 lg:py-0"
+    >
+      <span class="flex items-center justify-center text-[#29ABE2]">
+        <lucide-icon [img]="MapPin" [size]="20"></lucide-icon>
+      </span>
+
+      <span>Nearest Location</span>
+    </div>
+
+    <!-- Always Searchable -->
+    <div
+      class="flex min-h-9 items-center justify-center gap-2.5 py-3 text-sm font-medium text-[#16213E] lg:py-0"
+    >
+      <span class="flex items-center justify-center text-[#29ABE2]">
+        <lucide-icon [img]="Clock" [size]="20"></lucide-icon>
+      </span>
+
+      <span>Always Searchable</span>
+    </div>
+  </div>
+</div>
