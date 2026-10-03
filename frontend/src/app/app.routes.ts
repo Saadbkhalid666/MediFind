@@ -6,6 +6,15 @@ import { HomePage } from './pages/home-page/home-page';
 
 export const routes: Routes = [
   {
+    path: '',
+    component: HomePage,
+  },
+  {
+    path: 'home',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
+  {
     path: 'register',
     component: Register,
   },
@@ -17,5 +26,9 @@ export const routes: Routes = [
     path: 'verify-otp',
     component: OtpComponent,
   },
-  { path: 'home', component: HomePage },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
 ];
